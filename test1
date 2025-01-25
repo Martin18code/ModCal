@@ -1,0 +1,55 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+
+/**
+ * Program Modular Exponentiation untuk menghitung hasil dari M^e mod N dan C^d mod N dengan efisien.
+ * Menggunakan BigInteger untuk mendukung angka besar dan fungsi modPow untuk perhitungan cepat.
+ */
+public class ModularExponentiation {
+
+    /**
+     * Fungsi untuk menghitung M^e mod N menggunakan BigInteger.modPow.
+     * @param base Basis (M atau C).
+     * @param exponent Eksponen (e atau d).
+     * @param modulus Modulus (N).
+     * @return Hasil dari base^exponent mod modulus.
+     */
+    public static BigInteger modularExponentiation(BigInteger base, BigInteger exponent, BigInteger modulus) {
+        // BigInteger.modPow menghitung (base^exponent) % modulus dengan efisien.
+        return base.modPow(exponent, modulus);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Input M, e, d, dan N untuk menguji perhitungan modular exponentiation.
+        System.out.println("==== Modular Exponentiation Program ====");
+
+        // Memasukkan nilai M, e, d, dan N.
+        System.out.print("Masukkan basis (M): ");
+        BigInteger M = scanner.nextBigInteger();
+        System.out.print("Masukkan eksponen publik (e): ");
+        BigInteger e = scanner.nextBigInteger();
+        System.out.print("Masukkan eksponen privat (d): ");
+        BigInteger d = scanner.nextBigInteger();
+        System.out.print("Masukkan modulus (N): ");
+        BigInteger N = scanner.nextBigInteger();
+
+        // 2. Hitung M^e mod N untuk menghasilkan C (ciphertext).
+        System.out.println("\n==== Menghitung M^e mod N ====");
+        BigInteger C = modularExponentiation(M, e, N);
+        System.out.println("Hasil C (M^e mod N): " + C);
+
+        // 3. Hitung C^d mod N untuk mendapatkan kembali M (plaintext).
+        System.out.println("\n==== Menghitung C^d mod N ====");
+        BigInteger decryptedM = modularExponentiation(C, d, N);
+        System.out.println("Hasil M (C^d mod N): " + decryptedM);
+
+        // 4. Contoh optimasi: Pemisahan modulus dengan CRT jika diperlukan (opsional).
+        // Catatan: Tidak diimplementasikan di sini, tetapi bisa ditambahkan jika ada spesifikasi lebih lanjut.
+
+        System.out.println("\nProgram selesai.\nSilakan uji dengan nilai lain untuk melihat hasilnya.");
+
+        scanner.close();
+    }
+}
